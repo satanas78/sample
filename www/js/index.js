@@ -27,17 +27,21 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener("backbutton", this.BackKeyDown, true);
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function () {
-        window.location = 'main.html';
-        // app.receivedEvent('deviceready');
+        // window.location = 'main.html';
+        app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
     receivedEvent: function (id) {
+        if (parseFloat(window.device.version) >= 7.0) {
+            document.body.style.marginTop = "20px";
+        }
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
@@ -46,5 +50,9 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+    BackKeyDown: function() {
+        //navigator.notification.alert();
+        navigator.app.exitApp();  // For Exit Application
     }
 };

@@ -6,5 +6,15 @@
 </head>
 <body>
     MAIN PAGE
+    <script type="text/javascript" src="phonegap.js"></script>
+    <script type="text/javascript">
+        
+        function BackKeyDown() {
+            //navigator.notification.alert();
+            navigator.app.exitApp();  // For Exit Application
+        }
+        document.addEventListener("backbutton", BackKeyDown, true);
+
+    </script>
 </body>
 </html>
