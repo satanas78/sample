@@ -27,6 +27,7 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener("backbutton", this.BackKeyDown, true);
     },
     // deviceready Event Handler
     //
@@ -46,5 +47,9 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+    BackKeyDown: function() {
+        //navigator.notification.alert();
+        navigator.app.exitApp();  // For Exit Application
     }
 };
