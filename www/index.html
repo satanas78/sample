@@ -98,7 +98,7 @@
             <div class="page-serie-poster">
                 <img data-bind="attr: { src: serie().posterURL }" />
             </div>
-            <div data-bind="template: { name: 'episodes-template', foreach: episodes, as: 'episode' }">
+            <div data-bind="template: { name: 'tpl-episodes', foreach: episodes, as: 'episode' }">
             </div>
 
             <video id="video" width="90%" height="auto" controls="controls" style="display:none;"></video>
@@ -111,6 +111,12 @@
                     <div class="top-item-title"><span data-bind="text: name"></span></div>
                     <div class="top-item-poster"><img  data-bind="attr: { src: posterURL }" src="img/empty.jpg" /></div>
                 </div>
+            </div>
+        </script>
+        <script type="text/html" id="tpl-episodes">
+            <div data-bind="click: $parent.loadStreams, attr: { episode: episode }">
+                <span data-bind="text: season"></span>
+                <span data-bind="text: title"></span>
             </div>
         </script>
 
