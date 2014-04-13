@@ -42,7 +42,7 @@ var EverStreamViewModel = function () {
     // chargement de la liste des top séries
     // depuis le serveur ou depuis le localstorage
     this.loadTopSeries = function () {
-        alert('load top');
+        //alert('load top');
         var key = "topseries";
         //localStorage.removeItem(key);
         var item = localStorage.getItem(key);
