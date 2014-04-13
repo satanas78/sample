@@ -48,6 +48,21 @@ var EverStreamViewModel = function () {
         var item = localStorage.getItem(key);
         if (item == null) {
             alert('not in cache, sending request');
+
+            $.ajax({
+                dataType: "json",
+                url: topserieUrl,
+                success: function (datas) {
+                    alert('top loaded');
+                    localStorage.setItem(key, JSON.stringify(datas));
+                    self.topserie(datas.TopSeries);
+                    self.series(datas.Series);
+                },
+                error: function (jqXHR, statusText, errorText) {
+                    alert('ajax error : ' + statusText + ' / ' + errorText);
+                }
+            });
+
             $.getJSON(topserieUrl, function (datas) {
                 alert('top loaded');
                 localStorage.setItem(key, JSON.stringify(datas));
