@@ -50,7 +50,7 @@ var EverStreamViewModel = function () {
             alert('not in cache, sending request');
 
             $.ajax({
-                dataType: "json",
+                dataType: "jsonp",
                 url: topserieUrl,
                 success: function (datas) {
                     alert('top loaded');
