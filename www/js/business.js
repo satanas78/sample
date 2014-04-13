@@ -10,6 +10,10 @@ var Serie = function (item) {
     this.title = item.title;
     this.longDescription = item.longDescription;
     this.posterURL = item.posterURL;
+
+    this.getPoster = function () {
+        setTimeout(function () { return this.posterURL; }, 500);
+    }
 };
 
 var topserieUrl = "http://192.168.1.19/webapp/EverStreamProxy.ashx";

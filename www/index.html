@@ -92,7 +92,7 @@
             <div class="col-sm-6 item-top">
                 <div class="top-item" data-bind="click: $parent.onSerieClick, attr: { id: serieId }" >
                     <div class="top-item-title"><span data-bind="text: name"></span></div>
-                    <div class="top-item-poster"><img  data-bindx="attr: { src: posterURL }" src="img/empty.jpg" /></div>
+                    <div class="top-item-poster"><img  data-bind="attr: { src: getPoster() }" src="img/empty.jpg" /></div>
                 </div>
             </div>
         </script>
