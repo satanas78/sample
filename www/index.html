@@ -98,6 +98,20 @@
             <div class="page-serie-poster">
                 <img data-bind="attr: { src: serie().posterURL }" />
             </div>
+
+            <!-- language -->
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary">
+                    <input type="radio" name="language" id="option1"> FR
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="language" id="option2"> VOSTFR
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="language" id="option3"> VO
+                </label>
+            </div>
+
             <div data-bind="template: { name: 'tpl-episodes', foreach: episodes, as: 'episode' }">
             </div>
 
