@@ -48,6 +48,7 @@ var app = {
         alert(window.device.version);
         if (parseFloat(window.device.version) >= 7.0) {
             document.body.style.marginTop = "20px";
+            alert("margin modified");
         }
     },
     // Update DOM on a Received Event
