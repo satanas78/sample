@@ -113,3 +113,53 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
+
+
+/** CSS **/
+.item-top
+        {
+            border: 0px solid #ccc;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        
+        .top-item
+        {
+            border: 1px solid #ccc;
+            margin: 5px;
+            background-color: #fff;
+            max-widthx: 380px;
+        }
+        
+        .top-item-poster img
+        {
+            width: 100%;
+        }
+        
+        .title
+        {
+            left: 50%;
+        }
+        
+        .centered
+        {
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        
+        .icon-prev
+        {
+            background-image: url( left-arrow-48x48.png );
+        }
+        .icon-prev-off
+        {
+            background-image: none;
+        }
+        
+        .icon-prev, .icon-prev-off
+        {
+            background-position: left;
+            background-repeat: no-repeat;
+            width: 100px;
+            padding-left: 48px;
+        }
