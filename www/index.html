@@ -26,6 +26,12 @@
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Hello World</title>
 
+        <!-- JQUERY -->
+        <script type="text/javascript" src="lib/jquery-1.11.0.min.js"></script>
+
+        <!-- KNOCKOUT -->
+        <script type="text/javascript" src="lib/knockout-3.1.0.js"></script>
+
         <!-- Bootstrap -->
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
         <link rel="Stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />
@@ -33,37 +39,39 @@
 
     </head>
     <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
-        <div class="container-fluid">
 
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand icon-prev" href="#" data-bind="click: prevPage, visible: currentPage() == 'serie' " >Back</a>
-                <a class="navbar-brand icon-prev-off" href="#" data-bind="visible: currentPage() != 'serie' " ></a>
-                <p class="navbar-brand title">Top séries</p>
-            </div>
+        <!-- TOP BAR -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
+            <div class="container-fluid">
 
-            
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <div  class="col-sm-6 col-md-6 pull-right">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group"  >
-                            <input type="text" class="form-control" placeholder="Rechercher une série" name="srch-term" id="srch-term">
-                            <div class="input-group-btn">
-                                <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand icon-prev" href="#" data-bind="click: prevPage, visible: currentPage() == 'serie' " >Back</a>
+                    <a class="navbar-brand icon-prev-off" href="#" data-bind="visible: currentPage() != 'serie' " ></a>
+                    <p class="navbar-brand title">Top séries</p>
                 </div>
-            </div>
+
             
-        </div>
-    </nav>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div  class="col-sm-6 col-md-6 pull-right">
+                        <form class="navbar-form" role="search">
+                            <div class="input-group"  >
+                                <input type="text" class="form-control" placeholder="Rechercher une série" name="srch-term" id="srch-term">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+            </div>
+        </nav>
         <div class="app">
             <h1>PhoneGap</h1>
             <div id="deviceready" class="blink">
@@ -72,8 +80,26 @@
                 <p id="deviceProperties">Loading device properties...</p>
             </div>
         </div>
+
+        <!-- LISTE TOP -->
+        <div class="container-fluid centered" data-bind="visible: currentPage() == 'top'">
+            <div class="row" data-bind="template: { name: 'tpl-lst-top', foreach: topserie }">
+            </div>
+        </div>
+
+        <!-- TEMPLATES -->
+        <script type="text/html" id="tpl-lst-top">
+            <div class="col-sm-6 item-top">
+                <div class="top-item" data-bind="click: $parent.onSerieClick, attr: { id: serieId }" >
+                    <div class="top-item-title"><span data-bind="text: name"></span></div>
+                    <div class="top-item-poster"><img  data-bind="attr: { src: posterURL }" /></div>
+                </div>
+            </div>
+        </script>
+
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/business.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>
