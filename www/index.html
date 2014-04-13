@@ -87,6 +87,23 @@
             </div>
         </div>
 
+        <!-- PAGE DETAIL -->
+        <div class="page-serie" data-bind="visible: currentPage() == 'serie'">
+            <div class="page-serie-title">
+                <span data-bind="text: serie().title"></span>
+            </div>
+            <div class="page-serie-description">
+                <span data-bind="text: serie().longDescription"></span>
+            </div>
+            <div class="page-serie-poster">
+                <img data-bind="attr: { src: serie().posterURL }" />
+            </div>
+            <div data-bind="template: { name: 'episodes-template', foreach: episodes, as: 'episode' }">
+            </div>
+
+            <video id="video" width="90%" height="auto" controls="controls"></video>
+        </div>
+
         <!-- TEMPLATES -->
         <script type="text/html" id="tpl-lst-top">
             <div class="col-sm-6 item-top">

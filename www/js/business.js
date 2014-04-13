@@ -77,7 +77,15 @@ var EverStreamViewModel = function () {
     };
 
     this.onSerieClick = function (target) {
-
+        // rechercher si la série est déja chargée en mémoire
+        var match = ko.utils.arrayFirst(self.series(), function (item) { return item.id == target.serieId; });
+        if (match) {
+            // alert("found :" + match.title);
+            self.episodes([]);
+            //self.loadEpisodeList(target);
+            self.serie(match);
+            self.pageStack.unshift('serie');
+        }
     };
 
     // fonctions de navigation
