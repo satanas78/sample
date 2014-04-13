@@ -100,16 +100,22 @@
             </div>
 
             <!-- language -->
-            <div class="btn-group" data-toggle="buttons">
+            Language
+            <div class="btn-group btn-group-justified" data-toggle="buttons">
                 <label class="btn btn-primary">
-                    <input type="radio" name="language" id="option1"> FR
+                    <input type="radio" name="language"  ><span>VF</span>
                 </label>
                 <label class="btn btn-primary">
-                    <input type="radio" name="language" id="option2"> VOSTFR
+                    <input type="radio" name="language" ><span>VOSTFR</span></input>
                 </label>
                 <label class="btn btn-primary">
-                    <input type="radio" name="language" id="option3"> VO
+                    <input type="radio" name="language" ><span>VO</span></input>
                 </label>
+            </div>
+
+            <!-- SEASONS -->
+            Saisons
+            <div class="btn-group btn-group-justified" data-toogle="buttons" data-bind="template: {name: 'tpl-radio', foreach: seasons, as: 'item'}">
             </div>
 
             <div data-bind="template: { name: 'tpl-episodes', foreach: episodes, as: 'episode' }">
@@ -132,6 +138,11 @@
                 <span data-bind="text: season"></span>
                 <span data-bind="text: title"></span>
             </div>
+        </script>
+        <script type="text/html" id="tpl-radio">
+            <label class="btn btn-primary btnx">
+                <input type="radio" name="season" ><span data-bind="text: item"></span>
+            </label>
         </script>
 
         <script type="text/javascript" src="phonegap.js"></script>

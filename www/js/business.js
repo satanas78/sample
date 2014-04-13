@@ -44,6 +44,9 @@ var EverStreamViewModel = function () {
     // liste des épisodes de la série en cours
     this.episodes = ko.observableArray([]);
 
+    // liste des saisons
+    this.seasons = ko.observableArray([]);
+
     // chargement de la liste des top séries
     // depuis le serveur ou depuis le localstorage
     this.loadTopSeries = function () {
@@ -72,6 +75,14 @@ var EverStreamViewModel = function () {
     this.loadEpisodeList = function (serie) 
     {
         $.getJSON(getEpisodesURL.format({ id: serie.serieId }), function (result) {
+
+            $.each(result.Episodes, function (index, item) {
+                if ($.inArray(item.season, self.seasons()) == -1) {
+                    console.log('season:' + item.season);
+                    self.seasons.push(item.season);
+                }
+            });
+
             //alert(result);
             self.episodes(result.Episodes);
         });
