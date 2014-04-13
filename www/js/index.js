@@ -51,10 +51,10 @@ var app = {
             document.getElementById('navbar').setAttribute('style', 'min-height: 70px;padding-top: 20px');
             //alert("margin modified");
         }
-        alert('initialise knockout');
+        //alert('initialise knockout');
         var viewModel = new EverStreamViewModel();
         ko.applyBindings(viewModel);
-        alert('done');
+        //alert('done');
     },
     // Update DOM on a Received Event
     receivedEvent: function (id) {

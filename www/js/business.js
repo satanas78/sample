@@ -47,31 +47,17 @@ var EverStreamViewModel = function () {
         //localStorage.removeItem(key);
         var item = localStorage.getItem(key);
         if (item == null) {
-            alert('not in cache, sending request');
-
-            $.ajax({
-                dataType: "json",
-                url: topserieUrl,
-                success: function (datas) {
-                    alert('top loaded');
-                    localStorage.setItem(key, JSON.stringify(datas));
-                    self.topserie(datas.TopSeries);
-                    self.series(datas.Series);
-                },
-                error: function (jqXHR, statusText, errorText) {
-                    alert('ajax error : ' + statusText + ' / ' + errorText);
-                }
-            });
+            // alert('not in cache, sending request');
 
             $.getJSON(topserieUrl, function (datas) {
-                alert('top loaded');
+                // alert('top loaded');
                 localStorage.setItem(key, JSON.stringify(datas));
                 self.topserie(datas.TopSeries);
                 self.series(datas.Series);
             });
         }
         else {
-            alert('top in cache');
+            // alert('top in cache');
             var datas = JSON.parse(item);
             self.topserie(datas.TopSeries);
             self.series(datas.Series);
