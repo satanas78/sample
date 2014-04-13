@@ -38,12 +38,13 @@ var app = {
         app.receivedEvent('deviceready');
 
         var element = document.getElementById('deviceProperties');
+        element.innerHTML = "ok";
         element.innerHTML = 'Device Name: ' + device.name + '<br />' +
                             'Device Cordova: ' + device.cordova + '<br />' +
                             'Device Platform: ' + device.platform + '<br />' +
                             'Device UUID: ' + device.uuid + '<br />' +
                             'Device Version: ' + device.version + '<br />';
-        
+
         alert(window.device.version);
         if (parseFloat(window.device.version) >= 7.0) {
             document.body.style.marginTop = "20px";
