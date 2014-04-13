@@ -17,6 +17,7 @@ var Serie = function (item) {
 };
 
 var topserieUrl = "http://192.168.1.19/webapp/EverStreamProxy.ashx";
+var getEpisodesURL = "http://192.168.1.19/webapp/EverStreamProxy.ashx?GetEpisodes?serieId={id}";
 var EverStreamViewModel = function () {
     var self = this;
 
@@ -68,8 +69,12 @@ var EverStreamViewModel = function () {
         }
     };
 
-    this.loadEpisodeList = function (serie) {
-
+    this.loadEpisodeList = function (serie) 
+    {
+        $.getJSON(getEpisodesURL.format({ id: serie.serieId }), function (result) {
+            //alert(result);
+            self.episodes(result.Episodes);
+        });
     };
 
     this.loadStreams = function (episode) {
