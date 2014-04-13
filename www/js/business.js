@@ -47,6 +47,7 @@ var EverStreamViewModel = function () {
         //localStorage.removeItem(key);
         var item = localStorage.getItem(key);
         if (item == null) {
+            alert('not in cache, sending request');
             $.getJSON(topserieUrl, function (datas) {
                 alert('top loaded');
                 localStorage.setItem(key, JSON.stringify(datas));
