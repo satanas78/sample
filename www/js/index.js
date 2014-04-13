@@ -45,11 +45,11 @@ var app = {
                             'Device UUID: ' + device.uuid + '<br />' +
                             'Device Version: ' + device.version + '<br />';
 
-        alert(window.device.version);
+        //alert(window.device.version);
         if (parseFloat(window.device.version) >= 7.0) {
             document.body.style.marginTop = "20px";
             document.getElementById('navbar').setAttribute('style', 'min-height: 70px;padding-top: 20px');
-            alert("margin modified");
+            //alert("margin modified");
         }
         alert('initialise knockout');
         var viewModel = new EverStreamViewModel();
