@@ -48,6 +48,7 @@ var app = {
         alert(window.device.version);
         if (parseFloat(window.device.version) >= 7.0) {
             document.body.style.marginTop = "20px";
+            document.getElementById('navbar').setAttribute('style', 'min-height: 70px;padding-top: 20px');
             alert("margin modified");
         }
     },
