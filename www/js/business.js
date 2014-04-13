@@ -87,7 +87,7 @@ var EverStreamViewModel = function () {
         if (match) {
             // alert("found :" + match.title);
             self.episodes([]);
-            //self.loadEpisodeList(target);
+            self.loadEpisodeList(target);
             self.serie(match);
             self.pageStack.unshift('serie');
         }
