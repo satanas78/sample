@@ -42,17 +42,20 @@ var EverStreamViewModel = function () {
     // chargement de la liste des top séries
     // depuis le serveur ou depuis le localstorage
     this.loadTopSeries = function () {
+        alert('load top');
         var key = "topseries";
         //localStorage.removeItem(key);
         var item = localStorage.getItem(key);
         if (item == null) {
             $.getJSON(topserieUrl, function (datas) {
+                alert('top loaded');
                 localStorage.setItem(key, JSON.stringify(datas));
                 self.topserie(datas.TopSeries);
                 self.series(datas.Series);
             });
         }
         else {
+            alert('top in cache');
             var datas = JSON.parse(item);
             self.topserie(datas.TopSeries);
             self.series(datas.Series);
@@ -64,11 +67,11 @@ var EverStreamViewModel = function () {
     };
 
     this.loadStreams = function (episode) {
-        
+
     };
 
     this.onSerieClick = function (target) {
-        
+
     };
 
     // fonctions de navigation
@@ -90,5 +93,5 @@ var EverStreamViewModel = function () {
 
 };
 
-var viewModel = new EverStreamViewModel();
-ko.applyBindings(viewModel);
+//var viewModel = new EverStreamViewModel();
+//ko.applyBindings(viewModel);
