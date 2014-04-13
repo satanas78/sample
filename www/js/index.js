@@ -36,12 +36,22 @@ var app = {
     onDeviceReady: function () {
         // window.location = 'main.html';
         app.receivedEvent('deviceready');
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function (id) {
+
+        var element = document.getElementById('deviceProperties');
+        element.innerHTML = 'Device Name: ' + device.name + '<br />' +
+                            'Device Cordova: ' + device.cordova + '<br />' +
+                            'Device Platform: ' + device.platform + '<br />' +
+                            'Device UUID: ' + device.uuid + '<br />' +
+                            'Device Version: ' + device.version + '<br />';
+        
+        alert(window.device.version);
         if (parseFloat(window.device.version) >= 7.0) {
             document.body.style.marginTop = "20px";
         }
+    },
+    // Update DOM on a Received Event
+    receivedEvent: function (id) {
+
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
@@ -51,7 +61,7 @@ var app = {
 
         console.log('Received Event: ' + id);
     },
-    BackKeyDown: function() {
+    BackKeyDown: function () {
         //navigator.notification.alert();
         navigator.app.exitApp();  // For Exit Application
     }
