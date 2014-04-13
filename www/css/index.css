@@ -116,6 +116,12 @@ h1 {
 
 
 /** CSS **/
+ body
+        {
+            padding-top: 70px;
+            padding-bottom: 70px;
+            background-color: #AAA;
+        }
 .item-top
         {
             border: 0px solid #ccc;
