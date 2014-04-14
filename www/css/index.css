@@ -152,6 +152,11 @@ h1 {
             margin-left: 5%;
             margin-right: 5%;
         }
+                
+        .mb
+        {
+            width: 150px;
+        }
         
         .icon-prev
         {
