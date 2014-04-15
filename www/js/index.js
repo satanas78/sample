@@ -37,13 +37,13 @@ var app = {
         // window.location = 'main.html';
         app.receivedEvent('deviceready');
 
-        var element = document.getElementById('deviceProperties');
-        element.innerHTML = "ok";
-        element.innerHTML = 'Device Name: ' + device.name + '<br />' +
-                            'Device Cordova: ' + device.cordova + '<br />' +
-                            'Device Platform: ' + device.platform + '<br />' +
-                            'Device UUID: ' + device.uuid + '<br />' +
-                            'Device Version: ' + device.version + '<br />';
+//        var element = document.getElementById('deviceProperties');
+//        element.innerHTML = "ok";
+//        element.innerHTML = 'Device Name: ' + device.name + '<br />' +
+//                            'Device Cordova: ' + device.cordova + '<br />' +
+//                            'Device Platform: ' + device.platform + '<br />' +
+//                            'Device UUID: ' + device.uuid + '<br />' +
+//                            'Device Version: ' + device.version + '<br />';
 
         //alert(window.device.version);
         if (parseFloat(window.device.version) >= 7.0) {
@@ -60,11 +60,12 @@ var app = {
     receivedEvent: function (id) {
 
         var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        parentElement.setAttribute('style', 'display:none;');
+//        var listeningElement = parentElement.querySelector('.listening');
+//        var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+//        listeningElement.setAttribute('style', 'display:none;');
+//        receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
     },

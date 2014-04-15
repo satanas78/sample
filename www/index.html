@@ -19,6 +19,7 @@
 -->
 <html>
     <head>
+        <meta charset="utf-8"/>
 
         <meta name="format-detection" content="telephone=no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
@@ -41,7 +42,7 @@
     <body>
 
         <!-- TOP BAR -->
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar" >
             <div class="container-fluid">
 
                 <div class="navbar-header">
@@ -53,7 +54,7 @@
                     </button>
                     <a class="navbar-brand icon-prev" href="#" data-bind="click: prevPage, visible: currentPage() == 'serie' " >Back</a>
                     <a class="navbar-brand icon-prev-off" href="#" data-bind="visible: currentPage() != 'serie' " ></a>
-                    <p class="navbar-brand title">Top séries</p>
+                    <p class="navbar-brand title">Top sÃ©ries</p>
                 </div>
 
             
@@ -61,7 +62,7 @@
                     <div  class="col-sm-6 col-md-6 pull-right">
                         <form class="navbar-form" role="search">
                             <div class="input-group"  >
-                                <input type="text" class="form-control" placeholder="Rechercher une série" name="srch-term" id="srch-term">
+                                <input type="text" class="form-control" placeholder="Rechercher une sÃ©rie" name="srch-term" id="srch-term">
                                 <div class="input-group-btn">
                                     <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                                 </div>
@@ -72,14 +73,6 @@
             
             </div>
         </nav>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-                <p id="deviceProperties">Loading device properties...</p>
-            </div>
-        </div>
 
         <!-- LISTE TOP -->
         <div class="container-fluid centered" data-bind="visible: currentPage() == 'top'">
@@ -98,26 +91,27 @@
             <div class="page-serie-poster">
                 <img data-bind="attr: { src: serie().posterURL }" />
             </div>
+
             <div class="container-fluid centered">
-    <div class="well well-sm"><h4>Sélecteur d'épisode</h4></div>
+    <div class="well well-sm"><h4>SÃ©lecteur d'Ã©pisode</h4></div>
         
         Language<br />
         <div class="row btn-group" data-toggle="buttons">
             <label class="btn btn-primary btn-lg mb">
-                <input type="radio" name="language"><span>VF</span><span class="badge pull-right">5</span>
+                <input type="radio" name="language"><span>VF</span><span class="badge pull-right" data-bind="text: currentSerie().nbVF" ></span>
             </label>
             <label class="btn btn-primary btn-lg mb">
-                <input type="radio" name="language"><span>VOSTFR</span><span class="badge pull-right">13</span>
+                <input type="radio" name="language"><span>VOSTFR</span><span class="badge pull-right" data-bind="text: currentSerie().nbVOSTFR"></span>
             </label>
             <label class="btn btn-primary btn-lg mb">
-                <input type="radio" name="language"><span>VO</span><span class="badge pull-right">2</span>
+                <input type="radio" name="language"><span>VO</span><span class="badge pull-right" data-bind="text: currentSerie().nbVO"></span>
             </label>
         </div>
         <br />
         <br />
 
-
-        Saison&nbsp;/&nbsp;<span class="badge">5</span><br />
+        <!-- SELECTEUR DE SAISONS -->
+        Saison&nbsp;/&nbsp;<span class="badge" data-bind="text: currentSerieSeasons().length" ></span><br />
         <div class="row btn-group" data-toggle="buttons">
 
             <button type="button" class="btn btn-default btn-lg mb">
@@ -125,7 +119,7 @@
             </button>
 
             <button type="button" class="btn btn-primary btn-lg mb">
-                <span >Saison 2</span>
+                <span data-bind="text: currentSerieHistory().season" ></span>
             </button>
 
             <button type="button" class="btn btn-default btn-lg mb">
@@ -156,32 +150,18 @@
         <br />
 
     </div>
-            <!-- language -->
-            Language
-            <div class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-primary">
-                    <input type="radio" name="language"  ><span>VF</span>
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="language" ><span>VOSTFR</span></input>
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="language" ><span>VO</span></input>
-                </label>
-            </div>
-
-            <!-- SEASONS -->
-            Saisons
-            <div class="btn-group btn-group-justified" data-toogle="buttons" data-bind="template: {name: 'tpl-radio', foreach: seasons, as: 'item'}">
-            </div>
 
             <div data-bind="template: { name: 'tpl-episodes', foreach: episodes, as: 'episode' }">
             </div>
 
             <video id="video" width="90%" height="auto" controls="controls" style="display:none;"></video>
         </div>
+        </div>
 
-        
+        <!-- LOADING PANEL -->    
+        <div class="panel-loading" id="deviceready">
+            
+        </div>
             
 
 
@@ -206,6 +186,7 @@
             </label>
         </script>
 
+        <!-- JAVASCRIPT -->
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/business.js"></script>

@@ -47,6 +47,17 @@ var EverStreamViewModel = function () {
     // liste des saisons
     this.seasons = ko.observableArray([]);
 
+    this.currentSerie = ko.observable({
+        nbVF: 0,
+        nbVOSTFR: 11,
+        nbVO: 5,
+        seasons: []
+    });
+
+    this.currentSerieSeasons = ko.observableArray([]);
+
+    this.currentSerieHistory = ko.observable({season: '-'});
+
     // chargement de la liste des top séries
     // depuis le serveur ou depuis le localstorage
     this.loadTopSeries = function () {
@@ -72,20 +83,57 @@ var EverStreamViewModel = function () {
         }
     };
 
-    this.loadEpisodeList = function (serie) 
-    {
-        $.getJSON(getEpisodesURL.format({ id: serie.serieId }), function (result) {
+    //--------------------------------------------------
+    // Chargement de la liste des épisodes d'une série
+    //--------------------------------------------------
+    this.loadEpisodeList = function ( serie ) {
 
-            $.each(result.Episodes, function (index, item) {
-                if ($.inArray(item.season, self.seasons()) == -1) {
-                    console.log('season:' + item.season);
-                    self.seasons.push(item.season);
-                }
+        var key = "episodes_" + serie.serieId;
+        //this.clearCache( key );
+        var item = this.getCache(key);
+        if (item == null) {
+            $.getJSON(getEpisodesURL.format({ id: serie.serieId }), function (result) {
+                self.storeCache( key, result );
+                self.setEpisodeList( result );
             });
+        }
+        else
+        {
+            self.setEpisodeList( item );
+        }
 
-            //alert(result);
-            self.episodes(result.Episodes);
+        self.initSeasons( serie );
+    };
+
+    this.setEpisodeList = function( value )
+    {
+        $.each(value.Episodes, function (index, item) {
+
+            if ($.inArray(item.season, self.currentSerieSeasons()) == -1) {
+                console.log('season:' + item.season);
+                self.currentSerieSeasons.push(item.season);
+            }
         });
+        self.episodes(value.Episodes);
+    };
+
+    //-------------------------------------------------
+    // Initialisation des saisons de la série en cours
+    // (lors de la sélection de la série)
+    //-------------------------------------------------
+    this.initSeasons = function( serie )
+    {
+        // est-ce qu'il y as un épisode en cours de visu ou récemment visualisé ?
+        var key = "history_" + serie.serieId;
+        var item = self.getCache( key );
+        if( item == null )
+        {
+            item =
+            {
+                season: self.currentSerieSeasons()[0]
+            };
+        }
+        self.currentSerieHistory( item );
     };
 
     this.loadStreams = function (episode) {
@@ -97,7 +145,10 @@ var EverStreamViewModel = function () {
         var match = ko.utils.arrayFirst(self.series(), function (item) { return item.id == target.serieId; });
         if (match) {
             // alert("found :" + match.title);
+            self.currentSerieHistory({season: '?'});
+            self.currentSerieSeasons([]);
             self.episodes([]);
+
             self.loadEpisodeList(target);
             self.serie(match);
             self.pageStack.unshift('serie');
@@ -119,7 +170,22 @@ var EverStreamViewModel = function () {
     this.progressCurrent = ko.observable(70);
 
 
-
+    //=======================
+    // GESTION DU CACHE
+    //=======================
+    this.getCache = function( key )
+    {
+        var item = localStorage.getItem( key );
+        return JSON.parse(item)
+    };
+    this.storeCache = function( key, value )
+    {
+        localStorage.setItem( key, JSON.stringify(value) );
+    };
+    this.clearCache = function( key )
+    {
+        localStorage.removeItem( key );
+    };
 
 };
 
