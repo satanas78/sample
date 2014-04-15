@@ -95,14 +95,16 @@ var EverStreamViewModel = function () {
             $.getJSON(getEpisodesURL.format({ id: serie.serieId }), function (result) {
                 self.storeCache( key, result );
                 self.setEpisodeList( result );
+                self.initSeasons( serie );
             });
         }
         else
         {
             self.setEpisodeList( item );
+            self.initSeasons( serie );
         }
 
-        self.initSeasons( serie );
+
     };
 
     this.setEpisodeList = function( value )
