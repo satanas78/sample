@@ -114,7 +114,7 @@
         Saison&nbsp;/&nbsp;<span class="badge" data-bind="text: currentSerieSeasons().length" ></span><br />
         <div class="row btn-group" data-toggle="buttons">
 
-            <button type="button" class="btn btn-default btn-lg mb" >
+            <button type="button" class="btn btn-default btn-lg mb" data-bind="click: seasonPrev" >
                 <span class="glyphicon glyphicon-arrow-left"></span>
             </button>
 
@@ -129,8 +129,10 @@
 
         <br />
         <br />
-        
-        Episode&nbsp;/&nbsp;<span class="badge">13</span><br />
+
+        <!-- SELECTEUR EPISODES -->
+        Episode&nbsp;/&nbsp;
+                <span class="badge">13</span><br />
         <div class="row btn-group" data-toggle="buttons">
 
             <button type="button" class="btn btn-default btn-lg mb">
@@ -138,7 +140,7 @@
             </button>
 
             <button type="button" class="btn btn-primary btn-lg mb">
-                <span >Ep [09]</span>
+                <span data-bind="text: currentSeasonEpisodesIdx()==-1 ? '??' : currentSeasonEpisodes()[ currentSeasonEpisodesIdx() ].title" ></span>
             </button>
 
             <button type="button" class="btn btn-default btn-lg mb">
