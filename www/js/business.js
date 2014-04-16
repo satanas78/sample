@@ -52,6 +52,8 @@ var EverStreamViewModel = function () {
         seasons: []
     });
 
+    this.currentLanguage = ko.observable( 'VF' );
+
     this.currentSerieSeasons = ko.observableArray([]);
 
     this.currentSeasonEpisodes = ko.observableArray([]);
@@ -61,18 +63,24 @@ var EverStreamViewModel = function () {
 
     this.currentSerieHistory.subscribe( function( selectedSeason )
     {
-       // extraire la liste des épisodes disponibles pour cette saison
+        self.filterEpisodes( selectedSeason.season );
+    });
+
+    this.filterEpisodes = function( season )
+    {
+        // extraire la liste des épisodes disponibles pour cette saison
         self.currentSeasonEpisodesIdx(-1);
         self.currentSeasonEpisodes([]);
+        var language = '[' + self.currentLanguage() + ']';
         $.each( self.episodes(), function( index, item ) {
-           if( item.season == selectedSeason.season )
-           {
-               self.currentSeasonEpisodes.push( item );
-           }
+            if( item.season == season && item.title.indexOf( language ) != -1 )
+            {
+                self.currentSeasonEpisodes.push( item );
+            }
         });
         if( self.currentSeasonEpisodes().length > 0 )
             self.currentSeasonEpisodesIdx(0);
-    });
+    };
 
     // chargement de la liste des top séries
     // depuis le serveur ou depuis le localstorage
@@ -224,6 +232,12 @@ var EverStreamViewModel = function () {
         }
     };
 
+    this.onLanguageClick = function( newLanguage )
+    {
+        self.currentLanguage( newLanguage );
+        self.filterEpisodes( self.currentSerieHistory().season );
+    }
+
     // fonctions de navigation
     this.prevPage = function () {
         self.pageStack.shift(); //  ('top');
@@ -255,6 +269,73 @@ var EverStreamViewModel = function () {
     {
         localStorage.removeItem( key );
     };
+
+};
+
+var test = {
+
+    seasons: [
+        { name: 'Saison 1', language: [
+            {name:'VF', episodes: [
+                {title: 'Ep 01'},
+                {title: 'Ep 02'},
+                {title: 'Ep 03'},
+                {title: 'Ep 04'},
+            ]},
+            {name:'VOSTFR', episodes: [
+                {title: 'Ep 01'},
+                {title: 'Ep 02'},
+                {title: 'Ep 03'},
+                {title: 'Ep 04'},
+            ]},
+            {name:'VO', episodes: [
+                {title: 'Ep 01'},
+                {title: 'Ep 02'},
+                {title: 'Ep 03'},
+                {title: 'Ep 04'},
+            ]}
+        ]},
+        { name: 'Saison 2', language: [
+            {name:'VF', episodes: [
+                {title: 'Ep 01'},
+                {title: 'Ep 02'},
+                {title: 'Ep 03'},
+                {title: 'Ep 04'},
+            ]},
+            {name:'VOSTFR', episodes: [
+                {title: 'Ep 01'},
+                {title: 'Ep 02'},
+                {title: 'Ep 03'},
+                {title: 'Ep 04'},
+            ]},
+            {name:'VO', episodes: [
+                {title: 'Ep 01'},
+                {title: 'Ep 02'},
+                {title: 'Ep 03'},
+                {title: 'Ep 04'},
+            ]}
+        ]},
+        { name: 'Saison 3', language: [
+            {name:'VF', episodes: [
+                {title: 'Ep 01'},
+                {title: 'Ep 02'},
+                {title: 'Ep 03'},
+                {title: 'Ep 04'},
+            ]},
+            {name:'VOSTFR', episodes: [
+                {title: 'Ep 01'},
+                {title: 'Ep 02'},
+                {title: 'Ep 03'},
+                {title: 'Ep 04'},
+            ]},
+            {name:'VO', episodes: [
+                {title: 'Ep 01'},
+                {title: 'Ep 02'},
+                {title: 'Ep 03'},
+                {title: 'Ep 04'},
+            ]}
+        ]}
+    ]
 
 };
 
