@@ -259,6 +259,8 @@ var EverStreamViewModel = function () {
     this.getCache = function( key )
     {
         var item = localStorage.getItem( key );
+        if( item == null )
+            return null;
         return JSON.parse(item)
     };
     this.storeCache = function( key, value )
