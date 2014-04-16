@@ -64,14 +64,28 @@ var EverStreamViewModel = function () {
         //localStorage.removeItem(key);
         var item = localStorage.getItem(key);
         if (item == null) {
-            // alert('not in cache, sending request');
-
+			$.ajax(
+			{
+				dataType: "json",
+				url: topserieUrl,
+				success: function (datas) {
+					localStorage.setItem(key, JSON.stringify(datas));
+					self.topserie(datas.TopSeries);
+					self.series(datas.Series);
+				},
+				error: function() {
+					// TODO - Traitement des erreurs serveur
+					alert( "loadTopSeries error" );
+				}
+			});
+			/***********
             $.getJSON(topserieUrl, function (datas) {
                 // alert('top loaded');
                 localStorage.setItem(key, JSON.stringify(datas));
                 self.topserie(datas.TopSeries);
                 self.series(datas.Series);
             });
+			*******/
         }
         else {
             // alert('top in cache');
@@ -135,6 +149,22 @@ var EverStreamViewModel = function () {
         }
         self.currentSerieHistory( item );
     };
+	
+	this.seasonNext = function()
+	{
+		console.log( 'next');
+		var idx = self.currentSerieSeasons.indexOf( self.currentSerieHistory().season );
+		console.log( 'idx=' + idx);
+		if( idx >= 0 && idx < self.currentSerieSeasons().length-1 )
+		{
+		console.log( 'ok' );
+			idx++;
+			var item = {
+                season: self.currentSerieSeasons()[idx]
+            };
+			self.currentSerieHistory( item );	
+		}
+	}
 
     this.loadStreams = function (episode) {
 
