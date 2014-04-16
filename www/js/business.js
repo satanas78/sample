@@ -68,18 +68,33 @@ var EverStreamViewModel = function () {
 
     this.filterEpisodes = function( season )
     {
+        var counters = {
+            nbVF: 0,
+            nbVOSTFR: 0,
+            nbVO: 0,
+            seasons: []
+        };
         // extraire la liste des épisodes disponibles pour cette saison
         self.currentSeasonEpisodesIdx(-1);
         self.currentSeasonEpisodes([]);
         var language = '[' + self.currentLanguage() + ']';
         $.each( self.episodes(), function( index, item ) {
-            if( item.season == season && item.title.indexOf( language ) != -1 )
+            if( item.season == season )
             {
-                self.currentSeasonEpisodes.push( item );
+                if( item.title.indexOf( language ) != -1 )
+                    self.currentSeasonEpisodes.push( item );
+
+                if( item.title.indexOf( '[VF]' ) != -1 )
+                    counters.nbVF++;
+                else if( item.title.indexOf( '[VOSTFR]' ) != -1 )
+                    counters.nbVOSTFR++;
+                else if( item.title.indexOf( '[VO]' ) != -1 )
+                    counters.nbVO++;
             }
         });
         if( self.currentSeasonEpisodes().length > 0 )
             self.currentSeasonEpisodesIdx(0);
+        this.currentSerie( counters );
     };
 
     // chargement de la liste des top séries
