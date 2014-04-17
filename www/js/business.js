@@ -262,10 +262,29 @@ var EverStreamViewModel = function () {
             self.currentSerieHistory( item );
         }
 		e.stopPropagation();
-    }
+    };
 
     //--------------------------------------------------
     // FIN - SELECTEUR D'EPISODE
+    //==================================================
+
+    //==================================================
+    // RECHERCHE / CHARGEMENT VIDEO
+    //--------------------------------------------------
+    this.startVideo = function()
+    {
+        var episode = self.currentSeasonEpisodes()[self.currentSeasonEpisodesIdx()];
+        $('#dialog_title').text("Recherche de votre vidéo");
+        $('#dialog_subtitle').text( episode.season + " " + episode.title);
+        $('#modal_progress').text("recherche des liens");
+        $('#modal_message').text("...");
+        //startProgress();
+        $('#myModal').modal('show');
+
+
+    };
+    //--------------------------------------------------
+    // FIN - RECHERCHE / CHARGEMENT VIDEO
     //==================================================
 
     this.loadStreams = function (episode) {
