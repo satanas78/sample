@@ -19,6 +19,9 @@ var Serie = function (item) {
 var EverStreamViewModel = function () {
     var self = this;
 
+    //==============================================
+    // GESTIONNAIRE DE PAGE
+    //----------------------------------------------
     // type de la page en cours d'affichage :
     // top detail searchresult ...
     this.pageType = ko.observable('top');
@@ -29,10 +32,10 @@ var EverStreamViewModel = function () {
         return self.pageStack().slice(0)[0];
     }, this);
     this.pageStack.unshift('top'); // .push('top');
+    //-----------------------------------------------
+    // FIN
+    //==============================================
 	
-	this.buttonState = ko.observable(false);
-	//this.buttonState.subscribe( function( value ) { alert( value ); if( value == true ) self.buttonState( false ); } );
-	// this.buttonState.extend({ notify: 'always' });
 
     // liste top
     this.topserie = ko.observableArray([]);
@@ -85,9 +88,11 @@ var EverStreamViewModel = function () {
         $.each( self.episodes(), function( index, item ) {
             if( item.season == season )
             {
+                // si l'épisode est dans la langue choisie
                 if( item.title.indexOf( language ) != -1 )
                     self.currentSeasonEpisodes.push( item );
 
+                // Mise à jour des compteurs (épisodes dispos par langue)
                 if( item.title.indexOf( '[VF]' ) != -1 )
                     counters.nbVF++;
                 else if( item.title.indexOf( '[VOSTFR]' ) != -1 )
@@ -195,6 +200,30 @@ var EverStreamViewModel = function () {
         self.currentSerieHistory( item );
     };
 
+    //==================================================
+    // SELECTEUR D'EPISODE
+    //--------------------------------------------------
+
+    //-------------------------------
+    // Sélection de l'épisode suivant
+    //-------------------------------
+    this.episodeNext = function(data,e)
+    {
+        if( self.currentSeasonEpisodesIdx()  < self.currentSeasonEpisodes().length-1 )
+            self.currentSeasonEpisodesIdx( self.currentSeasonEpisodesIdx()+1 );
+        e.stopPropagation();
+    };
+
+    //----------------------------------
+    // Sélection de l'épisode précédent
+    //----------------------------------
+    this.episodePrev = function(data,e)
+    {
+        if( self.currentSeasonEpisodesIdx() > 0 )
+            self.currentSeasonEpisodesIdx( self.currentSeasonEpisodesIdx()-1 );
+        e.stopPropagation();
+    };
+
     //----------------------------------
     // Sélection de la saison suivante
     //----------------------------------
@@ -234,6 +263,10 @@ var EverStreamViewModel = function () {
         }
 		e.stopPropagation();
     }
+
+    //--------------------------------------------------
+    // FIN - SELECTEUR D'EPISODE
+    //==================================================
 
     this.loadStreams = function (episode) {
 
