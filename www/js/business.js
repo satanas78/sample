@@ -284,7 +284,7 @@ var EverStreamViewModel = function () {
 
 
         var video = document.getElementById('video'); // 'video2');
-        video.setAttribute('src', 'http://n4c1.exashare.com:8777/gkx2bm7u7im4kplwt2dold7evl4ov5hdn7ryv5x2u4ypihjwgf2v24glvtoa/v.mp4');
+        video.setAttribute('src', 'http://vs11.exashare.com:8777/igx2m3uf7im4kplwt2eolhxpxcirj3h7itdbjbjaoyvt3zur3nfjkfhz3cwa/v.mp4');
         video.load();
         video.play();
     };
