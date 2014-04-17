@@ -29,6 +29,10 @@ var EverStreamViewModel = function () {
         return self.pageStack().slice(0)[0];
     }, this);
     this.pageStack.unshift('top'); // .push('top');
+	
+	this.buttonState = ko.observable(false);
+	//this.buttonState.subscribe( function( value ) { alert( value ); if( value == true ) self.buttonState( false ); } );
+	// this.buttonState.extend({ notify: 'always' });
 
     // liste top
     this.topserie = ko.observableArray([]);
@@ -194,7 +198,7 @@ var EverStreamViewModel = function () {
     //----------------------------------
     // Sélection de la saison suivante
     //----------------------------------
-	this.seasonNext = function()
+	this.seasonNext = function(data,e)
 	{
 		console.log( 'next');
 		var idx = self.currentSerieSeasons.indexOf( self.currentSerieHistory().season );
@@ -208,11 +212,13 @@ var EverStreamViewModel = function () {
             };
 			self.currentSerieHistory( item );	
 		}
+		e.stopPropagation();
+		// self.buttonState( false );
 	}
     //------------------------------------
     // Sélection de la saison précédente
     //------------------------------------
-    this.seasonPrev = function()
+    this.seasonPrev = function(data,e)
     {
         console.log( 'prev');
         var idx = self.currentSerieSeasons.indexOf( self.currentSerieHistory().season );
@@ -226,6 +232,7 @@ var EverStreamViewModel = function () {
             };
             self.currentSerieHistory( item );
         }
+		e.stopPropagation();
     }
 
     this.loadStreams = function (episode) {
