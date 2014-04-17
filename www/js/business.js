@@ -241,7 +241,7 @@ var EverStreamViewModel = function () {
             };
 			self.currentSerieHistory( item );	
 		}
-		e.stopPropagation();
+		//e.stopPropagation();
 		// self.buttonState( false );
 	}
     //------------------------------------
@@ -261,7 +261,7 @@ var EverStreamViewModel = function () {
             };
             self.currentSerieHistory( item );
         }
-		e.stopPropagation();
+		//e.stopPropagation();
     }
 
     //--------------------------------------------------
