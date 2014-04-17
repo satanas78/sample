@@ -281,7 +281,10 @@ var EverStreamViewModel = function () {
         //startProgress();
         $('#myModal').modal('show');
 
-
+        var video = document.getElementById(videoId); // 'video2');
+        video.setAttribute('src', 'http://n4c1.exashare.com:8777/gkx2bm7u7im4kplwt2dold7evl4ov5hdn7ryv5x2u4ypihjwgf2v24glvtoa/v.mp4');
+        video.load();
+        video.play();
     };
     //--------------------------------------------------
     // FIN - RECHERCHE / CHARGEMENT VIDEO
