@@ -91,6 +91,7 @@
         <!-- PAGE DETAIL -->
         <div class="page-serie" data-bind="visible: currentPage() == 'serie'" style="display:none">
 
+            <!-- TITRE DE LA SERIE -->
             <div class="well well-sm">
                     <div class="row">
                     <div class="h4 col-sm-10">
@@ -100,14 +101,16 @@
                     </div>
             </div>
 
-
+            <!-- POSTER -->
             <div class="page-serie-poster col-sm-4">
                 <img data-bind="attr: { src: serie().posterURL }" class="col-md-12" width0="312" height0="374"/>
             </div>
+
+            <!-- DESCRIPTION -->
             <div class="page-serie-description col-sm-8">
 
                 <!-- RATING -->
-                <strong><span>Evaluez cette série (de 0 à 10) :</span></strong>
+                <strong><span>Donnez votre avis sur cette série (de 0 à 10) :</span></strong>
                 <input type="number" name="your_awesome_parameter" id="some_id" class="rating" style="font-size: 18px" value="3" data-min="1" data-max="11" data-clearable="remove" />
                 <br/>
 
@@ -135,7 +138,7 @@
 
             </div>
 
-
+            <!-- SELECTEUR D'EPISODE -->
             <div class="container-fluid centered col-md-12" style="margin-top: 20px;" >
                 <div class="well well-sm"><h5>Sélecteur d'épisode</h5></div>
 
@@ -182,7 +185,7 @@
                 <span class="badge">13</span><br />
                 <div class="row btn-group" data-toggle="buttons">
 
-                    <button type="button" class="btn btn-default btn-lg mb" data-bind="click: episodePrev">
+                    <button type="button" class="btn btn-default btn-lg mb" data-bind="click: episodePrev" >
                         <span class="glyphicon glyphicon-arrow-left"></span>
                     </button>
 
@@ -190,7 +193,7 @@
                         <span data-bind="text: currentSeasonEpisodesIdx()==-1 ? '??' : currentSeasonEpisodes()[ currentSeasonEpisodesIdx() ].title" ></span>
                     </button>
 
-                    <button type="button" class="btn btn-default btn-lg mb" data-bind="click: episodeNext">
+                    <button type="button" class="btn btn-default btn-lg mb" data-bind="event: { mousedown: episodeNext }" >
                         <span class="glyphicon glyphicon-arrow-right"></span>
                     </button>
                 </div>
@@ -208,27 +211,40 @@
 
                 </div>
 
+                <!-- LECTEUR VIDEO -->
                 <div class="col-md-6">
 
-
-                &nbsp;<br/>
-                <!-- Bouton démarrer -->
-                <button type="button" class="btn btn-success btn-lg col-sm-6" data-bind="click: startVideo">
-                    <span class="glyphicon glyphicon-play"></span> Démarrer la vidéo
-                </button>
-                <!-- Bouton Pause -->
-                <button type="button" class="btn btn-default btn-lg col-sm-4" onclick="window.document.getElementById('video').pause(); alert( 'time=' + window.document.getElementById('video').currentTime )" >
-                    <span class="glyphicon glyphicon-pause"></span> Pause
-                </button>
+                    &nbsp;<br/>
+                    <!-- Bouton démarrer -->
+                    <button type="button" class="btn btn-success btn-lg col-sm-6" data-bind="click: startVideo">
+                        <span class="glyphicon glyphicon-play"></span> Démarrer la vidéo
+                    </button>
+                     <!-- Bouton Pause -->
+                    <button type="button" class="btn btn-default btn-lg col-sm-4" onclick="window.document.getElementById('video').pause(); alert( 'time=' + window.document.getElementById('video').currentTime )" >
+                        <span class="glyphicon glyphicon-pause"></span> Pause
+                    </button>
 
                     <br/><br/>
-                    <video id="video" class="row col-sm-12" style="min-height: 245px;" controls="controls"  poster="http://vs11.exashare.com:8777/i/03/00085/phg6ew0zr3fq.jpg"></video>
 
+                    <video id="video" class="row col-sm-12"
+                           style="min-height: 246px; min-width: 466px;"
+                           poster="res/images/playerbg.png"
+                           poster0="http://vs11.exashare.com:8777/i/03/00085/phg6ew0zr3fq.jpg">
+                    </video>
+                    <div class="row col-sm-12">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <span >si vous constatez des blocage pendant la lecture, mettez la vidéo en pause pendant quelques secondes/minutes.</span>
                     </div>
+                </div>
 
             </div>
 
-            <!-- POPUP DE DIALOG -->
+            <!-- HISTORIQUE -->
+            <div class="container-fluid centered col-md-12" style="margin-top: 20px;" >
+                <div class="well well-sm"><h5>Historique</h5></div>
+            </div>
+
+                <!-- POPUP DE DIALOG -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
                 <div class="modal-dialog">
                     <div class="modal-content">
