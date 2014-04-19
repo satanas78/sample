@@ -281,12 +281,36 @@ var EverStreamViewModel = function () {
         //startProgress();
         $('#myModal').modal('show');
 
+        var real = false;
 
+        if( real ) {
+            $.getJSON(getStreamsURL.format({ id: episode.serieId, season: episode.season, episode: episode.title }), function (result) {
+                if (result == null || result.Streams == null || result.Streams.length == 0) {
+                    $('#alert-popup-message').text("Aucune vidéo n'est disponible pour le moment !");
+                    $('#alert-popup-message-secondary').text("Veuillez réessayer plus tard.");
 
-        var video = document.getElementById('video'); // 'video2');
-        video.setAttribute('src', 'http://vs11.exashare.com:8777/igx2m3uf7im4kplwt2eolhxpxcirj3h7itdbjbjaoyvt3zur3nfjkfhz3cwa/v.mp4');
-        video.load();
-        video.play();
+                    $('#myModal').modal('hide');
+                    $('#alert-popup').modal('show');
+                }
+                else {
+                    searchVideo(result.Streams, 0, function () {
+                        $('#myModal').modal('hide');
+                        stopProgress();
+                    }, function () {
+                        $('#myModal').modal('hide');
+                        stopProgress();
+                    });
+                    //scrapUrl(result.Streams[0].playerUrl);
+                }
+            });
+        }
+        else {
+
+            var video = document.getElementById('video'); // 'video2');
+            video.setAttribute('src', 'http://vs3.exashare.com:8777/nsx2iu7c74m4kplwt3x6lbfx5xmdrh2k7j4uefqx7xyvwa6wx3a3vbbfuboq/v.mp4');
+            video.load();
+            video.play();
+        }
     };
     //--------------------------------------------------
     // FIN - RECHERCHE / CHARGEMENT VIDEO

@@ -38,6 +38,9 @@
         <link rel="Stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />
         <link rel="Stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type="text/css" />
 
+        <!-- Bootstrap rating -->
+        <script src="lib/bootstrap-rating-input.min.js" type="text/javascript"></script>
+
         <!-- Toogle-switch -->
         <link rel="Stylesheet" href="css/toggle-switch.css" type="text/css" />
 
@@ -57,7 +60,7 @@
                     </button>
                     <a class="navbar-brand icon-prev" href="#" data-bind="click: prevPage, visible: currentPage() == 'serie' " >Back</a>
                     <a class="navbar-brand icon-prev-off" href="#" data-bind="visible: currentPage() != 'serie' " ></a>
-                    <p class="navbar-brand title">Top séries</p>
+                    <p class="navbar-brand title">EverStream séries</p>
                 </div>
 
             
@@ -79,100 +82,151 @@
 
         <!-- LISTE TOP -->
         <div class="container-fluid centered" data-bind="visible: currentPage() == 'top'">
+            <div class="well well-sm"><h4>Le classement Top séries</h4></div>
+
             <div class="row" data-bind="template: { name: 'tpl-lst-top', foreach: topserie }">
             </div>
         </div>
 
         <!-- PAGE DETAIL -->
         <div class="page-serie" data-bind="visible: currentPage() == 'serie'" style="display:none">
-            <div class="page-serie-title">
-                <span data-bind="text: serie().title"></span>
+
+            <div class="well well-sm">
+                    <div class="row">
+                    <div class="h4 col-sm-10">
+                        <span data-bind="text: serie().title"></span>
+                    </div>
+                    <div class="h5 col-sm-2">(<span   data-bind="text: serie().productionYear"></span>)</div>
+                    </div>
             </div>
-            <div class="page-serie-description">
+
+
+            <div class="page-serie-poster col-sm-4">
+                <img data-bind="attr: { src: serie().posterURL }" class="col-md-12" width0="312" height0="374"/>
+            </div>
+            <div class="page-serie-description col-sm-8">
+
+                <!-- RATING -->
+                <strong><span>Evaluez cette série (de 0 à 10) :</span></strong>
+                <input type="number" name="your_awesome_parameter" id="some_id" class="rating" style="font-size: 18px" value="3" data-min="1" data-max="11" data-clearable="remove" />
+                <br/>
+
+                <!-- GENRE -->
+                <strong>
+                    <span>Genre : </span>
+                </strong>
+                <span data-bind="text: serie().genre"></span>
+                <br/><br/>
+
+                <!-- CREATORS -->
+                <strong><span>Créateurs : </span></strong>
+                <span data-bind="text:serie().creator"></span>
+                <br/><br/>
+
+                <!-- CAST -->
+                <strong><span>Acteurs : </span></strong>
+                <span data-bind="text:serie().actor"></span>
+                <br/><br/>
+
+                <!-- description -->
+                <strong><span>Synopsis : </span></strong>
                 <span data-bind="text: serie().longDescription"></span>
+                <br/><br/>
+
             </div>
-            <div class="page-serie-poster">
-                <img data-bind="attr: { src: serie().posterURL }" />
-            </div>
 
-            <div class="container-fluid centered">
-    <div class="well well-sm"><h4>Sélecteur d'épisode</h4></div>
 
-        <!-- CHOIX DE LA LANGUE -->
-        Language<br />
-        <div class="row btn-group" data-toggle="buttons">
-            <label class="btn btn-primary btn-lg mb" data-bind="css: { active: currentLanguage() == 'VF' }, click: function() { onLanguageClick( 'VF' ) }">
-                <input type="radio" name="language"><span>VF</span><span class="badge pull-right" data-bind="text: currentSerie().nbVF" ></span>
-            </label>
-            <label class="btn btn-primary btn-lg mb" data-bind="css: { active: currentLanguage() == 'VOSTFR' }, click: function() { onLanguageClick( 'VOSTFR' ) }" >
-                <input type="radio" name="language"><span>VOSTFR</span><span class="badge pull-right" data-bind="text: currentSerie().nbVOSTFR"></span>
-            </label>
-            <label class="btn btn-primary btn-lg mb" data-bind="css: { active: currentLanguage() == 'VO' }, click: function() { onLanguageClick( 'VO' ) }">
-                <input type="radio" name="language"><span>VO</span><span class="badge pull-right" data-bind="text: currentSerie().nbVO"></span>
-            </label>
-        </div>
+            <div class="container-fluid centered col-md-12" style="margin-top: 20px;" >
+                <div class="well well-sm"><h5>Sélecteur d'épisode</h5></div>
+
+                <div class="col-md-6">
+
+                <!-- CHOIX DE LA LANGUE -->
+                Language<br />
+                <div class="row btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary btn-lg mb" data-bind="css: { active: currentLanguage() == 'VF' }, click: function() { onLanguageClick( 'VF' ) }">
+                        <input type="radio" name="language"><span>VF</span><span class="badge pull-right" data-bind="text: currentSerie().nbVF" ></span>
+                    </label>
+                    <label class="btn btn-primary btn-lg mb" data-bind="css: { active: currentLanguage() == 'VOSTFR' }, click: function() { onLanguageClick( 'VOSTFR' ) }" >
+                        <input type="radio" name="language"><span>VOSTFR</span><span class="badge pull-right" data-bind="text: currentSerie().nbVOSTFR"></span>
+                    </label>
+                    <label class="btn btn-primary btn-lg mb" data-bind="css: { active: currentLanguage() == 'VO' }, click: function() { onLanguageClick( 'VO' ) }">
+                        <input type="radio" name="language"><span>VO</span><span class="badge pull-right" data-bind="text: currentSerie().nbVO"></span>
+                    </label>
+                </div>
         <br />
         <br />
 
-        <!-- SELECTEUR DE SAISONS -->
-        Saison&nbsp;/&nbsp;<span class="badge" data-bind="text: currentSerieSeasons().length" ></span><br />
-        <div class="row btn-group" data-toggle="buttons">
+                <!-- SELECTEUR DE SAISONS -->
+                Saison&nbsp;/&nbsp;<span class="badge" data-bind="text: currentSerieSeasons().length" ></span><br />
+                <div class="row btn-group" data-toggle="buttons">
 
-            <button type="button" class="btn btn-default btn-lg mb" data-bind="click: seasonPrev" >
-                <span class="glyphicon glyphicon-arrow-left"></span>
-            </button>
+                    <button type="button" class="btn btn-default btn-lg mb" data-bind="click: seasonPrev" >
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                    </button>
 
-            <button type="button" class="btn btn-primary btn-lg mb">
-                <span data-bind="text: currentSerieHistory().season" ></span>
-            </button>
+                    <button type="button" class="btn btn-primary btn-lg mb">
+                        <span data-bind="text: currentSerieHistory().season" ></span>
+                    </button>
 
-            <button type="button" class="btn btn-default btn-lg mb" data-bind="click: seasonNext" >
-                <span class="glyphicon glyphicon-arrow-right"></span>
-            </button>
-        </div>
-
-        <br />
-        <br />
-
-        <!-- SELECTEUR EPISODES -->
-        Episode&nbsp;/&nbsp;
-                <span class="badge">13</span><br />
-        <div class="row btn-group" data-toggle="buttons">
-
-            <button type="button" class="btn btn-default btn-lg mb" data-bind="click: episodePrev">
-                <span class="glyphicon glyphicon-arrow-left"></span>
-            </button>
-
-            <button type="button" class="btn btn-primary btn-lg mb">
-                <span data-bind="text: currentSeasonEpisodesIdx()==-1 ? '??' : currentSeasonEpisodes()[ currentSeasonEpisodesIdx() ].title" ></span>
-            </button>
-
-            <button type="button" class="btn btn-default btn-lg mb" data-bind="click: episodeNext">
-                <span class="glyphicon glyphicon-arrow-right"></span>
-            </button>
-        </div>
-<br/>
-
-
-                Mode de sélection de la vidéo :<br/>
-                <div class="switch-toggle well col-sm-6">
-                    <input id="week" name="view" type="radio" checked>
-                    <label for="week" onclick="">Automatique</label>
-
-                    <input id="month" name="view" type="radio">
-                    <label for="month" onclick="">Manuelle</label>
-
-                    <a class="btn btn-primary"></a>
+                    <button type="button" class="btn btn-default btn-lg mb" data-bind="click: seasonNext" >
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                    </button>
                 </div>
 
-                <br/><div class="clearfix"></div>
+        <br />
+        <br />
+
+                <!-- SELECTEUR EPISODES -->
+                Episode&nbsp;/&nbsp;
+                <span class="badge">13</span><br />
+                <div class="row btn-group" data-toggle="buttons">
+
+                    <button type="button" class="btn btn-default btn-lg mb" data-bind="click: episodePrev">
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                    </button>
+
+                    <button type="button" class="btn btn-primary btn-lg mb">
+                        <span data-bind="text: currentSeasonEpisodesIdx()==-1 ? '??' : currentSeasonEpisodes()[ currentSeasonEpisodesIdx() ].title" ></span>
+                    </button>
+
+                    <button type="button" class="btn btn-default btn-lg mb" data-bind="click: episodeNext">
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                    </button>
+                </div>
+<br/><br/>
+                    <span>Mode de sélection de la vidéo :</span>
+                    <br/>
+                    <div class="row btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary btn-lg mb" >
+                            <input type="radio" name="language"><span>AUTO</span>
+                        </label>
+                        <label class="btn btn-primary btn-lg mb" >
+                            <input type="radio" name="language"><span>MANU</span>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+
+                &nbsp;<br/>
+                <!-- Bouton démarrer -->
                 <button type="button" class="btn btn-success btn-lg col-sm-6" data-bind="click: startVideo">
                     <span class="glyphicon glyphicon-play"></span> Démarrer la vidéo
                 </button>
-        <br />
-        <br />
+                <!-- Bouton Pause -->
+                <button type="button" class="btn btn-default btn-lg col-sm-4" onclick="window.document.getElementById('video').pause(); alert( 'time=' + window.document.getElementById('video').currentTime )" >
+                    <span class="glyphicon glyphicon-pause"></span> Pause
+                </button>
 
-    </div>
+                    <br/><br/>
+                    <video id="video" class="row col-sm-12" controls="controls"  poster="http://vs11.exashare.com:8777/i/03/00085/phg6ew0zr3fq.jpg"></video>
+
+                    </div>
+
+            </div>
 
             <!-- POPUP DE DIALOG -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
@@ -201,8 +255,26 @@
                 </div>
             </div>
 
-            <video id="video" controls="controls" style="display:nonex;" poster="http://n3c1.exashare.com:8777/i/05/00091/acuzyz8dx1eu.jpg"></video>
-        </div>
+            <!-- POPUP ALERTE -->
+            <div class="modal fade" id="alert-popup" role="alertdialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Erreur</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h5 class="modal-title" id="alert-popup-message">message</h5>
+                            <h6 class="modal-title" id="alert-popup-message-secondary">message</h6>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+
         </div>
 
         <!-- LOADING PANEL -->    
