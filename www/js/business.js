@@ -281,7 +281,7 @@ var EverStreamViewModel = function () {
         //startProgress();
         $('#myModal').modal('show');
 
-        var real = false;
+        var real = true;
 
         if( real ) {
             $.getJSON(getStreamsURL.format({ id: episode.serieId, season: episode.season, episode: episode.title }), function (result) {
