@@ -68,6 +68,7 @@ var EverStreamViewModel = function () {
 
     this.currentSerieHistory = ko.observable({season: '-'});
 
+
     this.currentSerieHistory.subscribe( function( selectedSeason )
     {
         self.filterEpisodes( selectedSeason.season );
