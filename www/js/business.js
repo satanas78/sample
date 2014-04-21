@@ -188,7 +188,20 @@ var EverStreamViewModel = function () {
     //-------------------------------------------------
     this.initSeasons = function( serie )
     {
+        console.log( "initSeasons" );
+        everstreamDAL.getHistory( serie.serieId, function( history ) {
+            if( history == null )
+            {
+                console.log( "pas d'historique" );
+                history = {
+                    season: self.currentSerieSeasons()[0]
+                };
+            }
+            self.currentSerieHistory( history );
+        } );
+
         // est-ce qu'il y as un épisode en cours de visu ou récemment visualisé ?
+        /**
         var key = "history_" + serie.serieId;
         var item = self.getCache( key );
         if( item == null )
@@ -199,6 +212,7 @@ var EverStreamViewModel = function () {
             };
         }
         self.currentSerieHistory( item );
+         **/
     };
 
     //==================================================
@@ -297,6 +311,7 @@ var EverStreamViewModel = function () {
                     searchVideo(result.Streams, 0, function () {
                         $('#myModal').modal('hide');
                         stopProgress();
+                        everstreamDAL.updateHistory( episode, new Date(), 0 );
                     }, function () {
                         $('#myModal').modal('hide');
                         stopProgress();
@@ -316,6 +331,21 @@ var EverStreamViewModel = function () {
     //--------------------------------------------------
     // FIN - RECHERCHE / CHARGEMENT VIDEO
     //==================================================
+
+    //==================================================
+    // GESTION DE L'HISTORIQUE
+    //--------------------------------------------------
+    this.addHistory = function( episode )
+    {
+        var item = {
+            episode: episode,
+
+        }
+    };
+    //--------------------------------------------------
+    // FIN - GESTION DE L'HISTORIQUE
+    //==================================================
+
 
     this.loadStreams = function (episode) {
 
