@@ -311,7 +311,7 @@ var EverStreamViewModel = function () {
                     searchVideo(result.Streams, 0, function () {
                         $('#myModal').modal('hide');
                         stopProgress();
-                        everstreamDAL.updateHistory( episode, new Date(), 0 );
+                        everstreamDAL.updateHistory( episode, new Date().getTime(), 0 );
                     }, function () {
                         $('#myModal').modal('hide');
                         stopProgress();
