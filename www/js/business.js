@@ -62,6 +62,25 @@ var EverStreamViewModel = function () {
 
     this.currentLanguage = ko.observable( 'VF' );
 
+    // Gestion de la saison sélectionnée :
+    // modification de la sélection ==> recalculer la liste des épisodes
+    this.currentSelectedSeason = ko.observable( '-' );
+    this.currentSelectedSeason.subscribe( function( season ) {
+        self.filterEpisodes( season );
+    });
+
+    /**
+    this.currentSeason = ko.observable( '?' );
+    this.currentEpisode = ko.observable( '?' );
+    this.currentSelection = ko.computed( function() {
+        return {
+            language: self.currentLanguage(),
+            season: self.currentSeason(),
+            episode: self.currentEpisode()
+        }
+    }, this);
+    **/
+
     this.currentSerieSeasons = ko.observableArray([]);
 
     this.currentSeasonEpisodes = ko.observableArray([]);
@@ -69,10 +88,24 @@ var EverStreamViewModel = function () {
 
     this.currentSerieHistory = ko.observable({season: '-'});
 
+    this.currentSerieHistoryDisplayEpisode = ko.computed( function() {
+        return self.currentSerieHistory().season == "-"
+            ? "Vous n'avez aucun épisode en cours pour cette série !"
+            : self.currentSerieHistory().season + " - " + self.currentSerieHistory().episode;
+    }, this );
+    this.currentSerieHistoryShowPlayButton = ko.computed( function() {
+        return self.currentSerieHistory().season == "-"
+            ? false
+            : true;
+    });
+
+
 
     this.currentSerieHistory.subscribe( function( selected )
     {
-        self.filterEpisodes( selected.season );
+        if( selected.season != '-' )
+            self.currentSelectedSeason( selected.season );
+        // self.filterEpisodes( selected.season );
         if( typeof(selected.episode) != 'undefined' && selected.episode != null && selected.episode != '-'  )
         {
             if( selected.episode.indexOf( '[VF]' ) != -1 )
@@ -85,6 +118,28 @@ var EverStreamViewModel = function () {
             var match = ko.utils.arrayFirst(self.currentSeasonEpisodes(), function (item) { return item.title == selected.episode; });
             if( match )
                 self.currentSeasonEpisodesIdx( self.currentSeasonEpisodes.indexOf( match ) );
+
+            if( typeof(selected.duration) != 'undefined' && selected.duration != null && selected.duration != 0 )
+            {
+                var duration = selected.duration;
+                var current = selected.current_position;
+                var percent = current * 100 / duration;
+                var txt = Math.round( percent )   + '%';
+                var mins = Math.floor( current / 60 );
+                var secs = current - (mins*60);
+                var t = mins + ":" + Math.round( secs );
+                $('#pb-video-progress').css( 'width', txt );
+                $('#video-progress').text( t );
+            }
+            else
+            {
+                $('#pb-video-progress').css( 'width', "0%" );
+                $('#video-progress').text( "00:00" );
+            }
+        } else
+        {
+            $('#pb-video-progress').css( 'width', "0%" );
+            $('#video-progress').text( "00:00" );
         }
     });
 
@@ -208,25 +263,12 @@ var EverStreamViewModel = function () {
             {
                 console.log( "pas d'historique" );
                 history = {
-                    season: self.currentSerieSeasons()[0]
+                    season: '-' // self.currentSerieSeasons()[0]
                 };
+                self.currentSelectedSeason(self.currentSerieSeasons()[0] );
             }
             self.currentSerieHistory( history );
         } );
-
-        // est-ce qu'il y as un épisode en cours de visu ou récemment visualisé ?
-        /**
-        var key = "history_" + serie.serieId;
-        var item = self.getCache( key );
-        if( item == null )
-        {
-            item =
-            {
-                season: self.currentSerieSeasons()[0]
-            };
-        }
-        self.currentSerieHistory( item );
-         **/
     };
 
     //==================================================
@@ -258,37 +300,24 @@ var EverStreamViewModel = function () {
     //----------------------------------
 	this.seasonNext = function(data,e)
 	{
-		console.log( 'next');
-		var idx = self.currentSerieSeasons.indexOf( self.currentSerieHistory().season );
-		console.log( 'idx=' + idx);
+		var idx = self.currentSerieSeasons.indexOf( self.currentSelectedSeason() );
 		if( idx >= 0 && idx < self.currentSerieSeasons().length-1 )
 		{
-		console.log( 'ok' );
 			idx++;
-			var item = {
-                season: self.currentSerieSeasons()[idx]
-            };
-			self.currentSerieHistory( item );	
+			self.currentSelectedSeason( self.currentSerieSeasons()[idx] );
 		}
 		e.stopPropagation();
-		// self.buttonState( false );
 	}
     //------------------------------------
     // Sélection de la saison précédente
     //------------------------------------
     this.seasonPrev = function(data,e)
     {
-        console.log( 'prev');
-        var idx = self.currentSerieSeasons.indexOf( self.currentSerieHistory().season );
-        console.log( 'idx=' + idx);
+        var idx = self.currentSerieSeasons.indexOf( self.currentSelectedSeason() );
         if( idx > 0 )
         {
-            console.log( 'ok' );
             idx--;
-            var item = {
-                season: self.currentSerieSeasons()[idx]
-            };
-            self.currentSerieHistory( item );
+            self.currentSelectedSeason(self.currentSerieSeasons()[idx]);
         }
 		e.stopPropagation();
     };
@@ -375,6 +404,7 @@ var EverStreamViewModel = function () {
         if (match) {
             // alert("found :" + match.title);
             self.currentSerieHistory({season: '?'});
+            self.currentSelectedSeason('?');
             self.currentSerieSeasons([]);
             self.episodes([]);
 
@@ -387,7 +417,7 @@ var EverStreamViewModel = function () {
     this.onLanguageClick = function( newLanguage )
     {
         self.currentLanguage( newLanguage );
-        self.filterEpisodes( self.currentSerieHistory().season );
+        self.filterEpisodes( self.currentSelectedSeason() );
     }
 
     // fonctions de navigation
