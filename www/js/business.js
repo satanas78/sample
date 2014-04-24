@@ -16,6 +16,7 @@ var Serie = function (item) {
     }
 };
 
+var everstreamViewModel = null;
 var EverStreamViewModel = function () {
     var self = this;
 
@@ -69,9 +70,22 @@ var EverStreamViewModel = function () {
     this.currentSerieHistory = ko.observable({season: '-'});
 
 
-    this.currentSerieHistory.subscribe( function( selectedSeason )
+    this.currentSerieHistory.subscribe( function( selected )
     {
-        self.filterEpisodes( selectedSeason.season );
+        self.filterEpisodes( selected.season );
+        if( typeof(selected.episode) != 'undefined' && selected.episode != null && selected.episode != '-'  )
+        {
+            if( selected.episode.indexOf( '[VF]' ) != -1 )
+                self.onLanguageClick( 'VF' );
+            else if( selected.episode.indexOf( '[VOSTFR]' ) != -1 )
+                self.onLanguageClick( 'VOSTFR' );
+            else if( selected.episode.indexOf( '[VO]' ) != -1 )
+                self.onLanguageClick( 'VO' );
+
+            var match = ko.utils.arrayFirst(self.currentSeasonEpisodes(), function (item) { return item.title == selected.episode; });
+            if( match )
+                self.currentSeasonEpisodesIdx( self.currentSeasonEpisodes.indexOf( match ) );
+        }
     });
 
     this.filterEpisodes = function( season )
@@ -286,9 +300,13 @@ var EverStreamViewModel = function () {
     //==================================================
     // RECHERCHE / CHARGEMENT VIDEO
     //--------------------------------------------------
-    this.startVideo = function()
-    {
+    this.startVideo = function() {
         var episode = self.currentSeasonEpisodes()[self.currentSeasonEpisodesIdx()];
+        self.startEpisode(episode);
+    };
+
+    this.startEpisode = function( episode )
+    {
         $('#dialog_title').text("Recherche de votre vidéo");
         $('#dialog_subtitle').text( episode.season + " " + episode.title);
         $('#modal_progress').text("recherche des liens");
@@ -308,10 +326,10 @@ var EverStreamViewModel = function () {
                     $('#alert-popup').modal('show');
                 }
                 else {
-                    searchVideo(result.Streams, 0, function () {
+                    searchVideo(episode, result.Streams, 0, function () {
                         $('#myModal').modal('hide');
                         stopProgress();
-                        everstreamDAL.updateHistory( episode, new Date().getTime(), 0 );
+                        everstreamDAL.updateHistory( episode, new Date().getTime(), 0, 0 );
                     }, function () {
                         $('#myModal').modal('hide');
                         stopProgress();

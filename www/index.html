@@ -140,9 +140,34 @@
 
             <!-- SELECTEUR D'EPISODE -->
             <div class="container-fluid centered col-md-12" style="margin-top: 20px;" >
-                <div class="well well-sm"><h5>Sélecteur d'épisode</h5></div>
+                <div class="well well-sm"><h4>Sélecteur d'épisode</h4></div>
+
+                <div class="alert alert-info">
+                    <h4>Episode en cours / dernier épisode visionné :</h4>
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <span data-bind="text: currentSerieHistory().season"></span>
+                            <span data-bind="text: currentSerieHistory().episode"></span>
+
+                            <div class="progress">
+                                <div id="pb-video-progress" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                                    <span id="video-progress">40% Complete (success)</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-lg btn-success" data-bind="click: startVideo">
+                                <span class="glyphicon glyphicon-play"></span> Continuer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="col-md-6">
+
 
                 <!-- CHOIX DE LA LANGUE -->
                 Language<br />
@@ -216,11 +241,11 @@
 
                     &nbsp;<br/>
                     <!-- Bouton démarrer -->
-                    <button type="button" class="btn btn-success btn-lg col-sm-6" data-bind="click: startVideo">
-                        <span class="glyphicon glyphicon-play"></span> Démarrer la vidéo
+                    <button type="button" class="btn btn-success btn-lg col-sm-4" data-bind="click: startVideo">
+                        <span class="glyphicon glyphicon-play"></span> Play
                     </button>
                      <!-- Bouton Pause -->
-                    <button type="button" class="btn btn-default btn-lg col-sm-4" onclick="window.document.getElementById('video').pause(); alert( 'time=' + window.document.getElementById('video').currentTime )" >
+                    <button type="button" class="btn btn-default btn-lg col-sm-3" onclick="window.document.getElementById('video').pause(); alert( 'time=' + window.document.getElementById('video').currentTime )" >
                         <span class="glyphicon glyphicon-pause"></span> Pause
                     </button>
 

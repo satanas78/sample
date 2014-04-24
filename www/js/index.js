@@ -52,8 +52,8 @@ var app = {
             //alert("margin modified");
         }
         //alert('initialise knockout');
-        var viewModel = new EverStreamViewModel();
-        ko.applyBindings(viewModel);
+        everstreamViewModel = new EverStreamViewModel();
+        ko.applyBindings(everstreamViewModel);
         //alert('done');
     },
     // Update DOM on a Received Event
